@@ -6,7 +6,7 @@ import {
     streamUI,
     createStreamableValue
 } from 'ai/rsc'
-import { openai } from '@ai-sdk/openai'
+import { createOpenAI } from '@ai-sdk/openai'
 
 import { BotMessage } from '@/components/stocks'
 import { nanoid} from '@/lib/utils'
@@ -14,7 +14,12 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 
 
-async function submitUserMessage(content: string) {
+const openai = createOpenAI({
+    baseURL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1',
+    apiKey: process.env.OPENAI_API_KEY || ''
+})
+
+async function submitUserMessage(content: string, model?: string) {
     'use server'
 
     const aiState = getMutableAIState<typeof AI>()
@@ -34,8 +39,10 @@ async function submitUserMessage(content: string) {
     let textStream: undefined | ReturnType<typeof createStreamableValue<string>>
     let textNode: undefined | React.ReactNode
 
+    console.log("model=", model)
+
     const result = await streamUI({
-        model: openai('gpt-3.5-turbo'),
+        model: openai(model || 'gpt-3.5-turbo'),
         initial: <SpinnerMessage />,
         system: `You are a friendly AI assistant.`,
 

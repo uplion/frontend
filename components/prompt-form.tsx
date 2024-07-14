@@ -62,7 +62,7 @@ export function PromptForm({
         ])
 
         // Submit and get response message
-        const responseMessage = await submitUserMessage(value)
+        const responseMessage = await submitUserMessage(value, localStorage.getItem('model') || 'gpt-3.5-turbo')
         setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >

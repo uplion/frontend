@@ -1,13 +1,29 @@
+'use client';
+
 import * as React from 'react'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
-import { auth } from '@/auth'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
     IconGitHub,
     IconUplion,
 } from '@/components/ui/icons'
+
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer"
+
 
 async function UserOrLogin() {
     return (
@@ -25,6 +41,10 @@ async function UserOrLogin() {
 }
 
 export function Header() {
+
+    const [model, setModel] = React.useState(localStorage.getItem("model") ?? 'gpt-3.5-turbo')
+    const [apiKey, setApiKey] = React.useState(localStorage.getItem("apiKey") ?? '')
+
     return (
         <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4 border-b shrink-0 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl">
             <div className="flex items-center">
@@ -33,6 +53,40 @@ export function Header() {
                 </React.Suspense>
             </div>
             <div className="flex items-center justify-end space-x-2">
+                <Drawer>
+                    <DrawerTrigger asChild>
+                        <Button>Settings</Button>
+                    </DrawerTrigger>
+                    <DrawerContent className="mb-8">
+                        <div className="mx-auto w-full max-w-sm">
+                            <DrawerHeader>
+                                <DrawerTitle>Settings</DrawerTitle>
+                                <DrawerDescription>Change your settings of AI model</DrawerDescription>
+                            </DrawerHeader>
+                            <div className="p-4 pb-0 space-y-4">
+                                <div>
+                                    <Label htmlFor='model'>Model</Label>
+                                    <Input id='model' defaultValue={model} onChange={(e) => {
+                                        setModel(e.target.value)
+                                        localStorage.setItem("model", e.target.value)
+                                    }}></Input>
+                                </div>
+                                <div>
+                                    <Label htmlFor='apikey'>API Key</Label>
+                                    <Input id='apikey' defaultValue={apiKey} onChange={(e) => {
+                                        setApiKey(e.target.value)
+                                        localStorage.setItem("apiKey", e.target.value)
+                                    }}></Input>
+                                </div>
+                            </div>
+                            <DrawerFooter>
+                                <DrawerClose asChild>
+                                    <Button className='mt-2'>Close</Button>
+                                </DrawerClose>
+                            </DrawerFooter>
+                        </div>
+                    </DrawerContent>
+                </Drawer>
                 <a
                     target="_blank"
                     href="https://github.com/uplion"
