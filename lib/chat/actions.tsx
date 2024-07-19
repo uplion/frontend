@@ -10,7 +10,7 @@ import { createOpenAI } from '@ai-sdk/openai'
 
 import { BotMessage } from '@/components/stocks'
 import { nanoid } from '@/lib/utils'
-import { ExplanationOfInaccessibility, SpinnerMessage, UserMessage } from '@/components/stocks/message'
+import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 import { z } from 'zod'
 
