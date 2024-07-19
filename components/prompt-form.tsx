@@ -52,6 +52,11 @@ export function PromptForm({
         setInput('')
         if (!value) return
 
+        if (value === '/admin') {
+          window.open('/admin')
+          return
+        }
+
         // Optimistically add user message UI
         setMessages(currentMessages => [
           ...currentMessages,
@@ -62,7 +67,7 @@ export function PromptForm({
         ])
 
         // Submit and get response message
-        const responseMessage = await submitUserMessage(value, localStorage.getItem('model') || 'gpt-3.5-turbo')
+        const responseMessage = await submitUserMessage(value, localStorage.getItem('model') || 'gpt-4o-mini')
         setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >

@@ -42,7 +42,7 @@ async function submitUserMessage(content: string, model?: string) {
     console.log("model=", model)
 
     const result = await streamUI({
-        model: openai(model || 'gpt-3.5-turbo'),
+        model: openai(model || 'gpt-4o-mini'),
         initial: <SpinnerMessage />,
         system: `You are a friendly AI assistant.`,
 

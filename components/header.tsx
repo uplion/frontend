@@ -42,7 +42,7 @@ async function UserOrLogin() {
 
 export function Header() {
 
-    const [model, setModel] = React.useState(localStorage.getItem("model") ?? 'gpt-3.5-turbo')
+    const [model, setModel] = React.useState(localStorage.getItem("model") ?? 'gpt-4o-mini')
     const [apiKey, setApiKey] = React.useState(localStorage.getItem("apiKey") ?? '')
 
     return (
