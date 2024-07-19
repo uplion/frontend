@@ -61,9 +61,15 @@ export function Header() {
                         <div className="mx-auto w-full max-w-sm">
                             <DrawerHeader>
                                 <DrawerTitle>Settings</DrawerTitle>
-                                <DrawerDescription>Change your settings of AI model</DrawerDescription>
+                                <DrawerDescription>
+                                    Change your settings of AI model or navigate to the
+                                    <Link
+                                        href="/admin"
+                                        className='mx-1 text-secondary-foreground underline'
+                                    >Admin Panel</Link>.
+                                </DrawerDescription>
                             </DrawerHeader>
-                            <div className="p-4 pb-0 space-y-4">
+                            <div className="px-4 space-y-4">
                                 <div>
                                     <Label htmlFor='model'>Model</Label>
                                     <Input id='model' defaultValue={model} onChange={(e) => {

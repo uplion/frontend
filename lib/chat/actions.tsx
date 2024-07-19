@@ -9,9 +9,10 @@ import {
 import { createOpenAI } from '@ai-sdk/openai'
 
 import { BotMessage } from '@/components/stocks'
-import { nanoid} from '@/lib/utils'
-import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
+import { nanoid } from '@/lib/utils'
+import { ExplanationOfInaccessibility, SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
+import { z } from 'zod'
 
 
 const openai = createOpenAI({
@@ -44,7 +45,8 @@ async function submitUserMessage(content: string, model?: string) {
     const result = await streamUI({
         model: openai(model || 'gpt-4o-mini'),
         initial: <SpinnerMessage />,
-        system: `You are a friendly AI assistant.`,
+        system: `You are a friendly AI assistant.
+        If the user ask 'Why can't I log in to the admin panel?', call \`explanation_of_inaccessibility\`.`,
 
         messages: [
             ...aiState.get().messages.map((message: any) => ({
@@ -77,6 +79,15 @@ async function submitUserMessage(content: string, model?: string) {
             }
 
             return textNode
+        },
+        tools: {
+            explanationOfInaccessibility: {
+                description: 'Explain why the user cannot log in to the admin panel',
+                parameters: z.object({}),
+                generate: async () => {
+                    return <ExplanationOfInaccessibility />
+                }
+            }
         }
     })
 

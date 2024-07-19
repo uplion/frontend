@@ -37,6 +37,28 @@ export function PromptForm({
     }
   }, [])
 
+  React.useEffect(() => {
+    let continueChat = true
+    ;(async () => {
+      const q = new URLSearchParams(window.location.search).get('q')
+      if (q) {
+        setMessages(currentMessages => [
+          {
+            id: nanoid(),
+            display: <UserMessage>{q}</UserMessage>
+          }
+        ])
+        const responseMessage = await submitUserMessage(q, localStorage.getItem('model') || 'gpt-4o-mini')
+        if (continueChat) setMessages(currentMessages => [...currentMessages, responseMessage])
+      }
+    })();
+    return () => {
+      continueChat = false
+    }
+  }, [setMessages, submitUserMessage])
+
+  
+
   return (
     <form
       ref={formRef}

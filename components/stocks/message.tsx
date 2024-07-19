@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { IconUplion, IconUser } from '@/components/ui/icons'
@@ -22,6 +23,20 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
         {children}
       </div>
     </div>
+  )
+}
+
+export function ExplanationOfInaccessibility() {
+  return (
+      <BotCard>
+          <p>We are very sorry, but you do not have permission to log in to the admin panel.
+            If you are seeing this error message during the showcase period of the NUS SOC 2024 Summer Workshop
+            (2024/07/20 9:00 - 2024/07/20 13:00), please refer to the map below and visit the UPLION showcase at
+            positions 69-72, 77-78, or 93-95 to view the admin panel demonstration.</p>
+          <div className='py-4'>
+              <img src="http://images.youxam.one/file/4a6bbc4a09197cc106cb7.png" alt="UPLION Showcase Map" />
+          </div>
+      </BotCard>
   )
 }
 
