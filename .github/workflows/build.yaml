@@ -28,7 +28,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/uplion-frontend:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/uplion-frontend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/uplion-frontend:${{ github.sha }}
 
       - name: Image digest
         run: echo ${{ steps.build-and-push.outputs.digest }}
